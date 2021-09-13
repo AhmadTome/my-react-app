@@ -1,0 +1,19 @@
+.add {
+    border-radius: 20px;
+    border: solid lightgray 1px;
+    width: 4%;
+    padding: 6px;
+    cursor: pointer;
+}
+
+.panel {
+    margin-top: 50px;
+}
+
+#isStillWorking, .add-btn {
+    margin-right: 10px;
+}
+
+.margin-right-10 {
+    margin-right: 10px;
+}
