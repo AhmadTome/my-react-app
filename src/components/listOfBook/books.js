@@ -7,6 +7,7 @@ import {Panel, Tab, Tabs} from "../bookPayment/tabs";
 
 const Books = () => {
     const {addToast} = useToasts();
+    const server = 'https://aqueous-gorge-52970.herokuapp.com/';
 
     const [showPaymentDialog, setShowPaymentDialog] = useState(false);
 
@@ -86,7 +87,7 @@ const Books = () => {
     )
 
     const loadBooks = () => {
-        axios.get(`http://localhost:8080/books`).then(res => {
+        axios.get(server + `books`).then(res => {
             console.log("books", res);
             let data = res["data"];
             updateBooksTable(data);
@@ -119,7 +120,7 @@ const Books = () => {
             "&unitPriceStart=" + searchAttr.unitPriceStart + "&unitPriceEnd=" + searchAttr.unitPriceEnd +
             "&availableUnitStart=" + searchAttr.availableUnitStart + "&availableUnitEnd=" + searchAttr.availableUnitEnd;
 
-        axios.get(`http://localhost:8080/books/search?` + search_attr).then(res => {
+        axios.get(server + `books/search?` + search_attr).then(res => {
             let data = res["data"];
             updateBooksTable(data);
         }).catch(error => {
@@ -167,7 +168,7 @@ const Books = () => {
             _id: _id,
         }));
 
-        axios.get(`http://localhost:8080/books/` + _id).then(res => {
+        axios.get(server + `books/` + _id).then(res => {
             console.log("book", res);
             let data = res["data"][0];
             setShowPaymentDialog(!showPaymentDialog);
@@ -201,7 +202,7 @@ const Books = () => {
     const ReserveBook = () => {
         let BookId = bookInfo._id;
         let data = {...paymentInfo, ...bookInfo, BookId};
-        axios.post(`http://localhost:8080/books/`+ BookId +`/reserve`, data).then(res => {
+        axios.post(server + `books/`+ BookId +`/reserve`, data).then(res => {
             addToast('Book Reserved Successfully', {appearance: 'success', autoDismiss: true});
             setShowPaymentDialog(!showPaymentDialog);
         }).catch(error => {

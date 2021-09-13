@@ -9,6 +9,8 @@ import {useToasts} from 'react-toast-notifications';
 
 
 const AddBookForm = () => {
+    const server = 'https://aqueous-gorge-52970.herokuapp.com/';
+
     const {addToast} = useToasts();
     const [showBookPublisher, setShowBookPublisher] = useState(false);
     const [showBookAuthor, setShowBookAuthor] = useState(false);
@@ -99,7 +101,7 @@ const AddBookForm = () => {
 
 
     const addNewPublisher = () => {
-        axios.post(`http://localhost:8080/publishers`, {
+        axios.post(server + `publishers`, {
             publisherName: book.bookName,
             establishDate: book.bookDate,
             isStillWorking: book.isStillWorking
@@ -129,7 +131,7 @@ const AddBookForm = () => {
             OfficialWebsite: author.officialWebSite
         }
 
-        axios.post(`http://localhost:8080/authors`, data).then(res => {
+        axios.post(server + `authors`, data).then(res => {
             console.log(res);
             setBookAuthorItem(prevData => ([
                 ...prevData,
@@ -154,7 +156,7 @@ const AddBookForm = () => {
         formData.append("UnitPrice", bookInfo.UnitPrice);
         formData.append("file", file);
         console.log("data", formData)
-        axios.post(`http://localhost:8080/books`, formData,{
+        axios.post(server + `books`, formData,{
             headers: {
                 "Content-Type": "multipart/form-data",
             }
@@ -198,7 +200,7 @@ const AddBookForm = () => {
 
 
     const bookPublishers =  () => {
-        axios.get(`http://localhost:8080/publishers`).then(res => {
+        axios.get(server + `publishers`).then(res => {
             console.log("bookPublisher", res);
             let items = [];
             const data = res['data'];
@@ -219,7 +221,7 @@ const AddBookForm = () => {
     }
 
     const bookAuthors = () => {
-        axios.get(`http://localhost:8080/authors`).then(res => {
+        axios.get(server + `authors`).then(res => {
             console.log("bookAuthors", res);
             let items = [];
             const data = res['data'];
