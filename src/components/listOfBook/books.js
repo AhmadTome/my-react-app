@@ -2,56 +2,74 @@ import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import DataTable from 'react-data-table-component';
 import {useToasts} from 'react-toast-notifications';
-import Modal from "../modal";
-import {Panel, Tab, Tabs} from "../bookPayment/tabs";
+import Modal from "../../libraries/modal/modal";
+import {Panel, Tab, Tabs} from "../../libraries/tab/tabs";
+import ReactDatatable from '@ashvin27/react-datatable';
+import '@fortawesome/fontawesome-free';
+import {isArrays} from "react-csv/src/core";
 
 const Books = () => {
     const {addToast} = useToasts();
-    const server = 'https://aqueous-gorge-52970.herokuapp.com/';
+    //const server = 'https://aqueous-gorge-52970.herokuapp.com/';
+    const server = 'http://localhost:8080/';
 
     const [showPaymentDialog, setShowPaymentDialog] = useState(false);
 
     const columns = [
         {
-            name: 'Id',
-            selector: '_id',
+            key: "_id",
+            text: "Id",
+            className: "name",
             sortable: true,
         },
         {
-            name: 'Title',
-            selector: 'BookTitle',
+            text: 'Title',
+            key: 'BookTitle',
             sortable: true,
         },
         {
-            name: 'Publisher',
-            selector: 'BookPublisherId',
+            text: 'Publisher',
+            key: 'BookPublisherId',
             sortable: true,
         },
         {
-            name: 'Publisher Date',
-            selector: 'PublisherDate',
+            text: 'Publisher Date',
+            key: 'PublisherDate',
         },
         {
-            name: 'Author',
-            selector: 'BookAuthorId',
+            text: 'Author',
+            key: 'BookAuthorId',
         },
         {
-            name: 'Book Tags',
-            selector: 'BookTags',
+            text: 'Book Tags',
+            key: 'BookTags',
         },
         {
-            name: 'Available Unit',
-            selector: 'AvailableUnit',
+            text: 'Available Unit',
+            key: 'AvailableUnit',
         },
         {
-            name: 'Unit Price',
-            selector: 'UnitPrice',
+            text: 'Unit Price',
+            key: 'UnitPrice',
         },
         {
-            name: 'Reserve',
-            selector: 'Reserve',
+            text: 'Reserve',
+            key: 'Reserve',
         },
     ];
+    const config = {
+        page_size: 10,
+        length_menu: [10, 20, 50],
+        show_filter: false,
+        show_pagination: true,
+        pagination: 'advance',
+        filename: "Books",
+        button: {
+            excel: true,
+            print: true,
+            csv: true,
+        }
+    }
 
     const [bookInfo, setBookInfo] = useState(
         {
@@ -74,27 +92,51 @@ const Books = () => {
             BuyerPhoneNumber: "",
             purchaseDate: "",
             NotionalId: "",
+            buyer_name: "ADMIN",
+            action: "TOB",
         }
     );
 
 
+    const [buyerDetails, setBuyerDetails] = useState(false);
+    const [paymentDetails, setBuyerPayment] = useState(false);
+
     const [books, setBooks] = useState(null);
 
-    const Button = ({isActive, onClick, children}) => (
-        <button className='btn' disabled={isActive} onClick={onClick}>
-            {children}
-        </button>
-    )
+    const [firstPage, setFirstPage] = useState(true);
+    const [secondPage, setSecondPage] = useState(false);
+    const [thirdPage, setThirdPage] = useState(false);
+    const [isAccepted, setIsAccepted] = useState(false);
+
+    const [firstPanel, setFirstPanel] = useState(true);
+
+    let count = 0;
+    const Button = ({isActive, onClick, children, completed}) => {
+        if (children == "Book Details" && count >= 4) {
+            setFirstPanel(false);
+        }
+        count++
+
+        const cls = "btn "+completed;
+
+        return (
+                <button  className={cls} disabled={isActive} onClick={onClick}>
+                    {children}
+                </button>
+            )
+
+
+    }
 
     const loadBooks = () => {
-        axios.get(server + `books`).then(res => {
-            console.log("books", res);
-            let data = res["data"];
-            updateBooksTable(data);
+        const search_attr = "inquiry=" + searchAttr.inquiry + "&searchCategory=" + searchAttr.searchCategory +
+            "&unitPriceStart=" + searchAttr.unitPriceStart + "&unitPriceEnd=" + searchAttr.unitPriceEnd +
+            "&availableUnitStart=" + searchAttr.availableUnitStart + "&availableUnitEnd=" + searchAttr.availableUnitEnd;
 
+        axios.get(server + `books/search?` + search_attr).then(res => {
+            updateBooksTable(res);
         }).catch(error => {
-            console.log("error", error);
-
+            addToast(error.message, {appearance: 'error', autoDismiss: true});
         });
     }
 
@@ -121,19 +163,26 @@ const Books = () => {
             "&availableUnitStart=" + searchAttr.availableUnitStart + "&availableUnitEnd=" + searchAttr.availableUnitEnd;
 
         axios.get(server + `books/search?` + search_attr).then(res => {
-            let data = res["data"];
-            updateBooksTable(data);
+            updateBooksTable(res);
         }).catch(error => {
             addToast(error.message, {appearance: 'error', autoDismiss: true});
         });
     }
 
     const updateBooksTable = (data) => {
+        setTotal_record(data["data"]["total_record"])
+        data = data["data"]["result"][0]["edges"];
+
         const filteredData = data.map((item) => {
 
-            const tag = (item['BookTags']).map(tag => {
-                return tag['text'] + ', ';
-            });
+            let tag;
+            if (Array.isArray(item['BookTags'])) {
+                tag = (item['BookTags']).map(tag => {
+                    return tag['text'] + ', ';
+                });
+            } else {
+                tag = item['BookTags'];
+            }
 
             var author = '';
             if (item['authors'] && item['authors'].length > 0 && item['authors'][0]["FirstName"]) {
@@ -147,6 +196,7 @@ const Books = () => {
             const publishDate = item['PublisherDate'].substr(0, 10);
 
 
+
             return {
                 ...item,
                 "BookTags": tag,
@@ -157,11 +207,18 @@ const Books = () => {
                                    data-id={item['_id']} onClick={() => PaymentToReserve(item['_id'])}>Reserve</button>
             }
         });
-
-        setBooks(filteredData)
+        setBooks(filteredData);
+        (document.getElementsByClassName('fa-file-excel-o')[0]).textContent='Excel';
+        (document.getElementsByClassName('fa-file-text-o')[0]).textContent='Csv';
     }
 
     const PaymentToReserve = (_id) => {
+        setSecondPage(false);
+        setThirdPage(false);
+
+
+
+
 
         setBookInfo((prevData) => ({
             ...prevData,
@@ -171,9 +228,9 @@ const Books = () => {
         axios.get(server + `books/` + _id).then(res => {
             console.log("book", res);
             let data = res["data"][0];
-            setShowPaymentDialog(!showPaymentDialog);
-            const BookAuthors = data['authors'][0] ? data['authors'][0]['FirstName'] : 'no book authors';
-            const BookPublisher = data['publishers'][0] ? data['publishers'][0]['publisherName'] : 'no book publisher';
+            setShowPaymentDialog(true);
+            const BookAuthors = data['authors'][0] ? data['authors'][0]['FirstName'] : 'no addBook authors';
+            const BookPublisher = data['publishers'][0] ? data['publishers'][0]['publisherName'] : 'no addBook publisher';
 
             setBookInfo((prevData) => ({
                 ...prevData,
@@ -193,6 +250,18 @@ const Books = () => {
 
     const PaymentInfoChange = (e) => {
         let {name, value} = e.target;
+
+        if (name == "numberOfUnit") {
+            let availableUnit = parseInt(bookInfo.AvailableUnit);
+            let numberOfUnit = parseInt(value);
+            if (numberOfUnit > availableUnit) {
+                alert('Please decrease the amount and take a look to the available unit ')
+                return ;
+            }
+        }
+
+
+
         setPaymentInfo((prevData) => ({
             ...prevData,
             [name]: value
@@ -201,7 +270,8 @@ const Books = () => {
 
     const ReserveBook = () => {
         let BookId = bookInfo._id;
-        let data = {...paymentInfo, ...bookInfo, BookId};
+        let TotalPrice = bookInfo.UnitPrice * paymentInfo.numberOfUnit;
+        let data = {...paymentInfo, ...bookInfo, BookId, TotalPrice};
         axios.post(server + `books/`+ BookId +`/reserve`, data).then(res => {
             addToast('Book Reserved Successfully', {appearance: 'success', autoDismiss: true});
             setShowPaymentDialog(!showPaymentDialog);
@@ -214,6 +284,43 @@ const Books = () => {
     useEffect(() => {
         loadBooks();
     }, []);
+
+    const tableChangeHandler = (e) => {
+        const page = e["page_number"];
+
+        const search_attr = "inquiry=" + searchAttr.inquiry + "&searchCategory=" + searchAttr.searchCategory +
+            "&unitPriceStart=" + searchAttr.unitPriceStart + "&unitPriceEnd=" + searchAttr.unitPriceEnd +
+            "&availableUnitStart=" + searchAttr.availableUnitStart + "&availableUnitEnd=" + searchAttr.availableUnitEnd;
+
+        axios.get(server + `books/search?` + search_attr+'&page='+page).then(res => {
+            updateBooksTable(res);
+        }).catch(error => {
+            addToast(error.message, {appearance: 'error', autoDismiss: true});
+        });
+
+    }
+
+    const [total_record, setTotal_record] = useState(0);
+
+    const savePage1 = () => {
+        if (paymentInfo.numberOfUnit != "") {
+            alert('you can pass to the second page')
+            setSecondPage(true);
+        } else {
+            alert("you can't pass to the second page, please fill all fields")
+            setSecondPage(false);
+        }
+    }
+
+    const savePage2 = () => {
+        if (paymentInfo.BuyerName != "" && paymentInfo.BuyerAddress != "" && paymentInfo.BuyerPhoneNumber != "" && paymentInfo.purchaseDate != "" && paymentInfo.NotionalId != "" ) {
+            alert('you can pass to the third page')
+            setThirdPage(true);
+        } else {
+            alert("you can't pass to the third page, please fill all fields")
+            setThirdPage(false);
+        }
+    }
 
     return (
         <div className='container'>
@@ -294,19 +401,15 @@ const Books = () => {
                     {
                         books
                         &&
-                        <DataTable
-                            title="Books"
+                        <ReactDatatable
+                            config={config}
+                            records={books}
                             columns={columns}
-                            data={books}
-                            highlightOnHover
-                            pagination
-                            paginationPerPage={5}
-                            paginationRowsPerPageOptions={[5, 15, 25, 50]}
-                            paginationComponentOptions={{
-                                rowsPerPageText: 'Records per page:',
-                                rangeSeparatorText: 'out of',
-                            }}
+                            dynamic={true}
+                            total_record={total_record}
+                            onChange={tableChangeHandler}
                         />
+
                     }
                 </div>
             </div>
@@ -318,20 +421,20 @@ const Books = () => {
                     <h1 className='text-left'>Reserve a book</h1>
 
                     <div className="panel-body">
-                        <Tabs>
-                            <div>
-                                <Tab>
-                                    <Button>Book Details</Button>
+                        <Tabs >
+                            <div >
+                                <Tab >
+                                    <Button completed={firstPage}>Book Details</Button>
                                 </Tab>
                                 <Tab>
-                                    <Button>Buyer details</Button>
+                                    <Button completed={secondPage}>Buyer details</Button>
                                 </Tab>
                                 <Tab>
-                                    <Button>Payment details</Button>
+                                    <Button completed={thirdPage}>Payment details</Button>
                                 </Tab>
                             </div>
 
-                            <Panel>
+                            <Panel active={firstPanel}>
                                 <div className="row form-group">
                                     <label className='pull-left col-sm-2 col-form-label' htmlFor="bookId">Book Id:</label>
                                     <div className='col-sm-10'>
@@ -434,12 +537,12 @@ const Books = () => {
                                     </div>
                                 </div>
 
-                                {/*<div className="row form-group">*/}
-                                {/*    <label className='pull-left col-sm-2 col-form-label' ></label>*/}
-                                {/*    <div className='col-sm-10'>*/}
-                                {/*        <button className='btn btn-primary pull-left'>Save and continue</button>*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
+                                <div className="row form-group">
+                                    <label className='pull-left col-sm-2 col-form-label' ></label>
+                                    <div className='col-sm-10'>
+                                        <button className='btn btn-primary pull-left' onClick={savePage1}>Save and continue</button>
+                                    </div>
+                                </div>
                             </Panel>
 
                             <Panel>
@@ -503,12 +606,12 @@ const Books = () => {
                                     </div>
                                 </div>
 
-                                {/*<div className="row form-group">*/}
-                                {/*    <label className='pull-left col-sm-2 col-form-label' ></label>*/}
-                                {/*    <div className='col-sm-10'>*/}
-                                {/*        <button className='btn btn-primary pull-left'>Save and continue</button>*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
+                                <div className="row form-group">
+                                    <label className='pull-left col-sm-2 col-form-label' ></label>
+                                    <div className='col-sm-10'>
+                                        <button className='btn btn-primary pull-left' onClick={savePage2}>Save and continue</button>
+                                    </div>
+                                </div>
                             </Panel>
 
                             <Panel>
@@ -575,7 +678,7 @@ const Books = () => {
                     <div className="row form-group">
                         <div className='col-sm-2 col-sm-offset-6'>
                             <button className='btn btn-default pull-left'
-                                    onClick={() => setShowPaymentDialog(!showPaymentDialog)}> Cancel
+                                    onClick={() => setShowPaymentDialog(false)}> Cancel
                             </button>
                         </div>
                     </div>

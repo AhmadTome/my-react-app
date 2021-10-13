@@ -26,7 +26,6 @@ export const Tabs = ({ state: outerState, children }) => {
 export const useTabState = () => {
     const [activeIndex, setActive] = useContext(TabsState)
     const elements = useContext(Elements)
-
     const tabIndex = useConstant(() => {
         const currentIndex = elements.tabs
         elements.tabs += 1
@@ -34,7 +33,13 @@ export const useTabState = () => {
         return currentIndex
     })
 
-    const onClick = useConstant(() => () => setActive(tabIndex))
+    const onClick = useConstant(() => (e) => {
+        let className = e.target.className;
+        let booleanClass = className.split(" ")[1];
+        if (booleanClass == "true") {
+            setActive(tabIndex)
+        }
+    })
 
     const state = useMemo(
         () => ({
@@ -73,6 +78,5 @@ export const Tab = ({ children }) => {
 
 export const Panel = ({ active, children }) => {
     const isActive = usePanelState()
-
     return isActive || active ? children : null
 }

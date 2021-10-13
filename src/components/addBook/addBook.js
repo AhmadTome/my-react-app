@@ -1,14 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import './AddBook.css';
 import './tags.css';
-import Modal from '../modal';
-import ReactDOM from 'react-dom';
+import Modal from '../../libraries/modal/modal';
 import {WithContext as ReactTags} from 'react-tag-input';
 import axios from "axios";
 import {useToasts} from 'react-toast-notifications';
+import { BallBeat } from 'react-pure-loaders';
+import CreatableSelect from 'react-select/creatable';
+import  {countries}  from './countries';
+import Books from "../listOfBook/books";
 
 
 const AddBookForm = () => {
+  //  const server = 'http://localhost:8080/';
     const server = 'https://aqueous-gorge-52970.herokuapp.com/';
 
     const {addToast} = useToasts();
@@ -23,7 +27,7 @@ const AddBookForm = () => {
         {id: 'Thailand', text: 'Thailand'}
     ]);
     const [tags, setTags] = useState([
-        {id: "Thailand", text: "Thailand"},
+        {id: "كتاب مخطوط", text: "مكتبة"},
         {id: "India", text: "India"}
     ]);
 
@@ -78,7 +82,7 @@ const AddBookForm = () => {
         enter: 13,
     };
 
-    const delimiters = [KeyCodes.comma, KeyCodes.enter];
+    const delimiters = [KeyCodes.enter];
 
     const handleDelete = (i) => {
         const filteredTags = tags.filter((tag, index) => index !== i);
@@ -145,6 +149,8 @@ const AddBookForm = () => {
     }
 
     const AddNewBook = () => {
+        resetError();
+        setLoading(true);
         const formData = new FormData();
         formData.append("BookId", bookInfo.BookId);
         formData.append("BookTitle", bookInfo.BookTitle);
@@ -155,16 +161,20 @@ const AddBookForm = () => {
         formData.append("AvailableUnit", bookInfo.AvailableUnit);
         formData.append("UnitPrice", bookInfo.UnitPrice);
         formData.append("file", file);
-        console.log("data", formData)
+        console.log("data", formData);
+
         axios.post(server + `books`, formData,{
             headers: {
                 "Content-Type": "multipart/form-data",
             }
         }).then(res => {
             console.log(res);
+            setLoading(false);
             addToast('Book Added Successfully', {appearance: 'success', autoDismiss: true});
         }).catch(error => {
+            setLoading(false);
             addToast(error.message, {appearance: 'error', autoDismiss: true});
+            showError(error.response.data.errors);
         });
     }
 
@@ -180,10 +190,33 @@ const AddBookForm = () => {
         );
     }
 
+    const showError = (error) => {
+        error.map((err)=>{
+            let ele = document.getElementById(err.key);
+            ele.textContent = err.error;
+        });
+    }
+
+    const resetError = () => {
+        let elements = document.getElementsByClassName('err');
+        for (var i=0; i<elements.length;i++) {
+            elements[i].textContent = '';
+
+        }
+    }
+
     const authorChange = (e) => {
-        const {name, value} = e.target;
-        console.log(name)
-        console.log(value)
+        let name = "";
+        let value = "";
+        if (e.label) {
+            name = "countryOfResidence";
+            value = e.value;
+
+        } else {
+            name = e.target.name;
+            value = e.target.value;
+        }
+
         setAuthor((prevData) => ({
             ...prevData,
             [name]: value
@@ -246,13 +279,17 @@ const AddBookForm = () => {
         bookAuthors();
     }, []);
 
+    const [loading, setLoading] = useState(false);
 
     return (
         <div className='container'>
-            <div className='panel panel-default'>
+            <div className='panel panel-default' >
                 <div className="panel-heading">Add New Book</div>
                 <div className="panel-body">
-
+                    <BallBeat
+                        color={'#123abc'}
+                        loading={loading}
+                    />
                         <div className="row form-group">
                             <label className='pull-left col-sm-2 col-form-label' htmlFor="bookId">Book Id:</label>
                             <div className='col-sm-10'>
@@ -261,6 +298,7 @@ const AddBookForm = () => {
                                        onChange={BookChange}
                                        name="BookId"
                                 />
+                                <span className='err' id='BookId' style={{float: 'left', color : 'red'}}></span>
                             </div>
                         </div>
 
@@ -274,6 +312,8 @@ const AddBookForm = () => {
                                        onChange={BookChange}
                                        name="BookTitle"
                                 />
+                                <span className='err' id='BookTitle' style={{float: 'left', color : 'red'}}></span>
+
                             </div>
                         </div>
 
@@ -288,10 +328,13 @@ const AddBookForm = () => {
                                 >
                                     {bookPublisherItem}
                                 </select>
+                                <span className='err' id='BookPublisherId' style={{float: 'left', color : 'red'}}></span>
+
                             </div>
                             <span className='col-sm-1 add' onClick={() => setShowBookPublisher(!showBookPublisher)}>
                                 +
                             </span>
+
                         </div>
 
                         <div className="row form-group">
@@ -304,6 +347,8 @@ const AddBookForm = () => {
                                        onChange={BookChange}
                                        name="PublisherDate"
                                 />
+                                <span className='err' id='PublisherDate' style={{float: 'left', color : 'red'}}></span>
+
                             </div>
                         </div>
 
@@ -318,6 +363,8 @@ const AddBookForm = () => {
                                 >
                                     {bookAuthorItem}
                                 </select>
+                                <span className='err' id='BookAuthorId' style={{float: 'left', color : 'red'}}></span>
+
                             </div>
                             <span className='col-sm-1 add' onClick={() => setShowBookAuthor(!showBookAuthor)}>
                                 +
@@ -354,11 +401,13 @@ const AddBookForm = () => {
                             <label className='pull-left col-sm-2 col-form-label' htmlFor="AvailableUnit">Available
                                 Unit:</label>
                             <div className='col-sm-10'>
-                                <input type="text" className="form-control" id="AvailableUnit" placeholder=""
+                                <input type="text" className="form-control" id="" placeholder=""
                                        value={bookInfo.AvailableUnit}
                                        onChange={BookChange}
                                        name="AvailableUnit"
                                 />
+                                <span className='err' id='AvailableUnit' style={{float: 'left', color : 'red'}}></span>
+
                             </div>
                         </div>
 
@@ -366,11 +415,13 @@ const AddBookForm = () => {
                             <label className='pull-left col-sm-2 col-form-label' htmlFor="UnitPrice">Unit
                                 Price:</label>
                             <div className='col-sm-10 '>
-                                <input type="text" className="form-control" id="UnitPrice" placeholder=""
+                                <input type="text" className="form-control" id="" placeholder=""
                                        value={bookInfo.UnitPrice}
                                        onChange={BookChange}
                                        name="UnitPrice"
                                 />
+                                <span className='err' id='UnitPrice' style={{float: 'left', color : 'red'}}></span>
+
                             </div>
                         </div>
 
@@ -476,13 +527,22 @@ const AddBookForm = () => {
                                 </div>
 
                                 <div className="pull-left margin-right-10 col-sm-5">
-                                    <label className='pull-left'>Country of residence: </label>
+                                    <label className=''>Country of residence: </label>
                                     <br/>
-                                    <select value={author.countryOfResidence} onChange={authorChange}
-                                            name="countryOfResidence" id="countryOfResidence"
-                                            className="form-control">
-                                        <option>Select The Country</option>
-                                    </select>
+                                    <p>
+                                        <CreatableSelect
+                                            onChange={authorChange}
+                                            options={countries}
+                                        />
+                                    </p>
+
+
+
+                                    {/*<select value={author.countryOfResidence} onChange={authorChange}*/}
+                                    {/*        name="countryOfResidence" id="countryOfResidence"*/}
+                                    {/*        className="form-control">*/}
+                                    {/*    <option>Select The Country</option>*/}
+                                    {/*</select>*/}
                                 </div>
                             </div>
 

@@ -1,6 +1,6 @@
 .add {
     border-radius: 20px;
-    border: solid lightgray 1px;
+   border: solid lightgray 1px;
     width: 4%;
     padding: 6px;
     cursor: pointer;
@@ -16,4 +16,12 @@
 
 .margin-right-10 {
     margin-right: 10px;
+}
+
+#bookList {
+    margin-right: 25px;
+}
+
+.panel-default {
+    border: none !important;
 }

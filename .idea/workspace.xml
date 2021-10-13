@@ -11,8 +11,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7f914664-7e70-44e7-a2b5-172ec0b14c3a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/addBook/countries.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/fileManager/fileManager.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/purchaseHistory/purchaseHistory.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/withToast.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/libraries/tab/tab.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/book/AddBook.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/addBook/AddBook.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/book/addBook.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/addBook/addBook.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/book/tags.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/addBook/tags.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/bookPayment/form.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/bookPayment/tab.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/fileManager/fileContainerCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/bookPayment/tabs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/libraries/tab/tabs.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/listOfBook/books.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/listOfBook/books.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/modal.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/libraries/modal/modal.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/modal.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/libraries/modal/modal.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,8 +44,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JavaScript File" />
         <option value="CSS File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -45,7 +62,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/WebstormProjects/my-node-app" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -55,6 +72,8 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\atome\PhpstormProjects\my-react-app\src\libraries\modal" />
+      <recent name="C:\Users\atome\PhpstormProjects\my-react-app\src\libraries\tab" />
       <recent name="C:\Users\atome\PhpstormProjects\my-react-app\scripts" />
     </key>
   </component>
@@ -101,7 +120,17 @@
       <workItem from="1631429536957" duration="10991000" />
       <workItem from="1631515398825" duration="1476000" />
       <workItem from="1631520121648" duration="195000" />
-      <workItem from="1631520367011" duration="3211000" />
+      <workItem from="1631520367011" duration="3896000" />
+      <workItem from="1632125211016" duration="6760000" />
+      <workItem from="1632206822811" duration="7678000" />
+      <workItem from="1632230294030" duration="1981000" />
+      <workItem from="1632295163301" duration="11064000" />
+      <workItem from="1632381145671" duration="5702000" />
+      <workItem from="1632726355752" duration="3894000" />
+      <workItem from="1632814122844" duration="6363000" />
+      <workItem from="1633414943681" duration="15941000" />
+      <workItem from="1633506629315" duration="8733000" />
+      <workItem from="1634123007464" duration="6003000" />
     </task>
     <servers />
   </component>
@@ -121,11 +150,16 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="651" y="169" key="FileChooserDialogImpl" timestamp="1630493239324">
+    <state x="-923" y="270" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1632210190478">
+      <screen x="-1366" y="105" width="1366" height="728" />
+    </state>
+    <state x="-923" y="270" key="#com.intellij.fileTypes.FileTypeChooser/-1366.105.1366.728/0.0.1920.1040/1920.-301.1680.1010@-1366.105.1366.728" timestamp="1632210190478" />
+    <state x="856" y="261" key="FileChooserDialogImpl" timestamp="1634123031593">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="856" y="261" key="FileChooserDialogImpl/-1366.105.1366.728/0.0.1920.1040/1920.-301.1680.1010@-1366.105.1366.728" timestamp="1632125253450" />
+    <state x="856" y="261" key="FileChooserDialogImpl/-1366.105.1366.728/0.0.1920.1040/1920.-301.1680.1010@0.0.1920.1040" timestamp="1634123031593" />
     <state x="651" y="169" key="FileChooserDialogImpl/-1366.303.1366.728/0.0.1920.1040/1920.-301.1680.1010@0.0.1920.1040" timestamp="1630493239324" />
-    <state x="463" y="118" key="FileChooserDialogImpl/0.0.1366.728/1366.0.1920.1040@0.0.1366.728" timestamp="1623754215131" />
     <state x="463" y="118" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1630398917683" />
     <state width="1345" height="179" key="GridCell.Tab.0.bottom" timestamp="1629802442251">
       <screen x="0" y="0" width="1366" height="728" />
@@ -143,13 +177,9 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state width="1345" height="179" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1629802442251" />
-    <state x="184" y="8" key="SettingsEditor" timestamp="1622977367124">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state x="990" y="128" width="587" height="534" key="find.popup" timestamp="1634129614082">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="184" y="8" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1622977367124" />
-    <state x="389" y="0" width="587" height="728" key="find.popup" timestamp="1623675313825">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="389" y="0" width="587" height="728" key="find.popup/0.0.1366.728/1366.0.1920.1040@0.0.1366.728" timestamp="1623675313825" />
+    <state x="990" y="128" width="587" height="534" key="find.popup/-1366.105.1366.728/0.0.1920.1040/1920.-301.1680.1010@0.0.1920.1040" timestamp="1634129614082" />
   </component>
 </project>
