@@ -10,27 +10,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7f914664-7e70-44e7-a2b5-172ec0b14c3a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/addBook/countries.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/fileManager/fileManager.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/purchaseHistory/purchaseHistory.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/withToast.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/libraries/tab/tab.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/book/AddBook.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/addBook/AddBook.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/book/addBook.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/addBook/addBook.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/book/tags.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/addBook/tags.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/bookPayment/form.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/bookPayment/tab.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/fileManager/fileContainerCard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/bookPayment/tabs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/libraries/tab/tabs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/listOfBook/books.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/listOfBook/books.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/modal.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/libraries/modal/modal.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/modal.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/libraries/modal/modal.js" afterDir="false" />
-    </list>
+    <list default="true" id="7f914664-7e70-44e7-a2b5-172ec0b14c3a" name="Default Changelist" comment="upload all changes" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -130,8 +110,16 @@
       <workItem from="1632814122844" duration="6363000" />
       <workItem from="1633414943681" duration="15941000" />
       <workItem from="1633506629315" duration="8733000" />
-      <workItem from="1634123007464" duration="6003000" />
+      <workItem from="1634123007464" duration="6431000" />
     </task>
+    <task id="LOCAL-00001" summary="upload all changes">
+      <created>1634129641260</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1634129641261</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -148,6 +136,10 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="upload all changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="upload all changes" />
   </component>
   <component name="WindowStateProjectService">
     <state x="-923" y="270" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1632210190478">
@@ -177,6 +169,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state width="1345" height="179" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1629802442251" />
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1634129652224">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2/-1366.105.1366.728/0.0.1920.1040/1920.-301.1680.1010@0.0.1920.1040" timestamp="1634129652224" />
     <state x="990" y="128" width="587" height="534" key="find.popup" timestamp="1634129614082">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
