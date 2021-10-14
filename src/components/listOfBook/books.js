@@ -10,8 +10,8 @@ import {isArrays} from "react-csv/src/core";
 
 const Books = () => {
     const {addToast} = useToasts();
-    //const server = 'https://aqueous-gorge-52970.herokuapp.com/';
-    const server = 'http://localhost:8080/';
+    const server = 'https://aqueous-gorge-52970.herokuapp.com/';
+    //const server = 'http://localhost:8080/';
 
     const [showPaymentDialog, setShowPaymentDialog] = useState(false);
 
