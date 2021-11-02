@@ -10,8 +10,7 @@ import {
 } from "reactstrap";
 
 const FileContainerCard = (props) => {
-    //const server = 'http://localhost:8080/';
-    const server = 'https://aqueous-gorge-52970.herokuapp.com/';
+
 
 
 
@@ -25,7 +24,7 @@ const FileContainerCard = (props) => {
 
     const findSRC = () => {
         const filename = props.filename;
-       let path =  `${server}${props.filename}`
+       let path =  `${process.env.REACT_APP_SERVER_PATH}${props.filename}`
         const ext = filename.split('.').pop();
 
        switch (ext) {

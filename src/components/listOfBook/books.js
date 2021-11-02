@@ -6,12 +6,10 @@ import Modal from "../../libraries/modal/modal";
 import {Panel, Tab, Tabs} from "../../libraries/tab/tabs";
 import ReactDatatable from '@ashvin27/react-datatable';
 import '@fortawesome/fontawesome-free';
-import {isArrays} from "react-csv/src/core";
+import AXIOS from "../../config/axiosWrapper";
 
 const Books = () => {
     const {addToast} = useToasts();
-    const server = 'https://aqueous-gorge-52970.herokuapp.com/';
-    //const server = 'http://localhost:8080/';
 
     const [showPaymentDialog, setShowPaymentDialog] = useState(false);
 
@@ -133,7 +131,7 @@ const Books = () => {
             "&unitPriceStart=" + searchAttr.unitPriceStart + "&unitPriceEnd=" + searchAttr.unitPriceEnd +
             "&availableUnitStart=" + searchAttr.availableUnitStart + "&availableUnitEnd=" + searchAttr.availableUnitEnd;
 
-        axios.get(server + `books/search?` + search_attr).then(res => {
+        AXIOS.get(process.env.REACT_APP_SERVER_PATH + `books/search?` + search_attr, [] ,{}).then(res => {
             updateBooksTable(res);
         }).catch(error => {
             addToast(error.message, {appearance: 'error', autoDismiss: true});
@@ -162,7 +160,7 @@ const Books = () => {
             "&unitPriceStart=" + searchAttr.unitPriceStart + "&unitPriceEnd=" + searchAttr.unitPriceEnd +
             "&availableUnitStart=" + searchAttr.availableUnitStart + "&availableUnitEnd=" + searchAttr.availableUnitEnd;
 
-        axios.get(server + `books/search?` + search_attr).then(res => {
+        axios.get(process.env.REACT_APP_SERVER_PATH + `books/search?` + search_attr).then(res => {
             updateBooksTable(res);
         }).catch(error => {
             addToast(error.message, {appearance: 'error', autoDismiss: true});
@@ -208,25 +206,38 @@ const Books = () => {
             }
         });
         setBooks(filteredData);
-        (document.getElementsByClassName('fa-file-excel-o')[0]).textContent='Excel';
-        (document.getElementsByClassName('fa-file-text-o')[0]).textContent='Csv';
+        let table_tools = document.getElementsByClassName('table_tools')[0];
+        table_tools.append('')
+
+
+        let excelEle = document.getElementsByClassName('fa-file-excel-o')[0];
+        let CsvEle = document.getElementsByClassName('fa-file-text-o')[0];
+        (excelEle).textContent='Excel';
+        (excelEle).addEventListener('click', exportExcel, false);
+
+        (CsvEle).textContent='Csv';
+        (CsvEle).addEventListener('click', exportCSV, false);
+
     }
 
+    function exportExcel (){
+        alert('Excel')
+    }
+
+    function exportCSV (){
+        alert('CSV');
+        return false;
+    }
     const PaymentToReserve = (_id) => {
         setSecondPage(false);
         setThirdPage(false);
-
-
-
-
 
         setBookInfo((prevData) => ({
             ...prevData,
             _id: _id,
         }));
 
-        axios.get(server + `books/` + _id).then(res => {
-            console.log("book", res);
+        AXIOS.get(process.env.REACT_APP_SERVER_PATH + `books/` + _id, [] ,{}).then(res => {
             let data = res["data"][0];
             setShowPaymentDialog(true);
             const BookAuthors = data['authors'][0] ? data['authors'][0]['FirstName'] : 'no addBook authors';
@@ -272,7 +283,7 @@ const Books = () => {
         let BookId = bookInfo._id;
         let TotalPrice = bookInfo.UnitPrice * paymentInfo.numberOfUnit;
         let data = {...paymentInfo, ...bookInfo, BookId, TotalPrice};
-        axios.post(server + `books/`+ BookId +`/reserve`, data).then(res => {
+        axios.post(process.env.REACT_APP_SERVER_PATH + `books/`+ BookId +`/reserve`, data).then(res => {
             addToast('Book Reserved Successfully', {appearance: 'success', autoDismiss: true});
             setShowPaymentDialog(!showPaymentDialog);
         }).catch(error => {
@@ -292,7 +303,7 @@ const Books = () => {
             "&unitPriceStart=" + searchAttr.unitPriceStart + "&unitPriceEnd=" + searchAttr.unitPriceEnd +
             "&availableUnitStart=" + searchAttr.availableUnitStart + "&availableUnitEnd=" + searchAttr.availableUnitEnd;
 
-        axios.get(server + `books/search?` + search_attr+'&page='+page).then(res => {
+        AXIOS.get(process.env.REACT_APP_SERVER_PATH + `books/search?` + search_attr+'&page='+page, [], {}).then(res => {
             updateBooksTable(res);
         }).catch(error => {
             addToast(error.message, {appearance: 'error', autoDismiss: true});

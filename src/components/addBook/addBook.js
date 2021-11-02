@@ -9,12 +9,9 @@ import { BallBeat } from 'react-pure-loaders';
 import CreatableSelect from 'react-select/creatable';
 import  {countries}  from './countries';
 import Books from "../listOfBook/books";
-
+import AXIOS from "../../config/axiosWrapper";
 
 const AddBookForm = () => {
-  //  const server = 'http://localhost:8080/';
-    const server = 'https://aqueous-gorge-52970.herokuapp.com/';
-
     const {addToast} = useToasts();
     const [showBookPublisher, setShowBookPublisher] = useState(false);
     const [showBookAuthor, setShowBookAuthor] = useState(false);
@@ -63,15 +60,32 @@ const AddBookForm = () => {
             UnitPrice: "",
         }
     ]);
+
+    const [bookInfoErr, setBookInfoErr] = useState([
+        {
+            BookId: "",
+            BookTitle: "",
+            BookPublisherId: "",
+            PublisherDate: "",
+            BookAuthorId: "",
+            AvailableUnit: "",
+            UnitPrice: "",
+        }
+    ]);
+
     const [file, setFile] = useState(null);
 
 
 
-    const [bookPublisherItem, setBookPublisherItem] = useState([
-        <option value='0'>select</option>
-    ]);
+    const [bookPublisherItem, setBookPublisherItem] = useState([{
+        key : 0,
+        val : 'select'
+    }]);
     const [bookAuthorItem, setBookAuthorItem] = useState([
-        <option value='0'>select</option>
+        {
+            key : 0,
+            val : 'select'
+        }
     ]);
 
 
@@ -105,15 +119,17 @@ const AddBookForm = () => {
 
 
     const addNewPublisher = () => {
-        axios.post(server + `publishers`, {
+        AXIOS.post(process.env.REACT_APP_SERVER_PATH + `publishers`, {
             publisherName: book.bookName,
             establishDate: book.bookDate,
             isStillWorking: book.isStillWorking
-        }).then(res => {
-            console.log(res);
+        }, {}).then(res => {
             setBookPublisherItem(prevData => ([
                 ...prevData,
-                <option value={res["data"]["_id"]}>{res["data"]["publisherName"]}</option>
+                {
+                    key : res["data"]["_id"],
+                    val : res["data"]["publisherName"]
+                }
             ]));
             addToast('Publisher Added Successfully', {appearance: 'success', autoDismiss: true});
             setShowBookPublisher(!showBookPublisher)
@@ -135,11 +151,13 @@ const AddBookForm = () => {
             OfficialWebsite: author.officialWebSite
         }
 
-        axios.post(server + `authors`, data).then(res => {
-            console.log(res);
+        AXIOS.post(process.env.REACT_APP_SERVER_PATH + `authors`, data, {}).then(res => {
             setBookAuthorItem(prevData => ([
                 ...prevData,
-                <option value={res["data"]["_id"]}>{res["data"]["FirstName"] +" " + res["data"]["LastName"]}</option>,
+                {
+                    key : res["data"]["_id"],
+                    val : res["data"]["FirstName"] +" " + res["data"]["LastName"]
+                }
             ]));
             addToast('Author Added Successfully', {appearance: 'success', autoDismiss: true});
             setShowBookAuthor(!showBookAuthor)
@@ -161,14 +179,12 @@ const AddBookForm = () => {
         formData.append("AvailableUnit", bookInfo.AvailableUnit);
         formData.append("UnitPrice", bookInfo.UnitPrice);
         formData.append("file", file);
-        console.log("data", formData);
 
-        axios.post(server + `books`, formData,{
+        axios.post(process.env.REACT_APP_SERVER_PATH + `books`, formData,{
             headers: {
                 "Content-Type": "multipart/form-data",
             }
         }).then(res => {
-            console.log(res);
             setLoading(false);
             addToast('Book Added Successfully', {appearance: 'success', autoDismiss: true});
         }).catch(error => {
@@ -191,18 +207,27 @@ const AddBookForm = () => {
     }
 
     const showError = (error) => {
+
         error.map((err)=>{
-            let ele = document.getElementById(err.key);
-            ele.textContent = err.error;
+            setBookInfoErr((prevData) => ({
+                ...prevData,
+                [err.key]: err.error
+            }));
         });
     }
 
     const resetError = () => {
-        let elements = document.getElementsByClassName('err');
-        for (var i=0; i<elements.length;i++) {
-            elements[i].textContent = '';
-
-        }
+        setBookInfoErr([
+            {
+                BookId: "",
+                BookTitle: "",
+                BookPublisherId: "",
+                PublisherDate: "",
+                BookAuthorId: "",
+                AvailableUnit: "",
+                UnitPrice: "",
+            }
+        ]);
     }
 
     const authorChange = (e) => {
@@ -233,41 +258,34 @@ const AddBookForm = () => {
 
 
     const bookPublishers =  () => {
-        axios.get(server + `publishers`).then(res => {
-            console.log("bookPublisher", res);
-            let items = [];
+        AXIOS.get(process.env.REACT_APP_SERVER_PATH + `publishers`, [], {}).then(res => {
             const data = res['data'];
-            console.log(data)
             for (let i = 0; i < data.length; i++) {
-                items.push(<option value={data[i]._id}>{data[i].publisherName}</option>);
+                setBookPublisherItem(prevData => ([
+                    ...prevData,
+                    {
+                        key : data[i]._id,
+                        val : data[i].publisherName
+                    }
+                ]))
             }
-
-            setBookPublisherItem(prevData => ([
-                ...prevData,
-                items
-            ]))
-             return items;
-
         }).catch(error => {
             addToast(error.message, {appearance: 'error', autoDismiss: true});
         });
     }
 
     const bookAuthors = () => {
-        axios.get(server + `authors`).then(res => {
-            console.log("bookAuthors", res);
-            let items = [];
+        AXIOS.get(process.env.REACT_APP_SERVER_PATH + `authors`, [], {}).then(res => {
             const data = res['data'];
-            console.log(data)
             for (let i = 0; i < data.length; i++) {
-                items.push(<option value={data[i]._id}>{data[i].FirstName+" "+data[i].LastName}</option>);
+                setBookAuthorItem(prevData => ([
+                    ...prevData,
+                    {
+                        key : data[i]._id,
+                        val : data[i].FirstName+" "+data[i].LastName
+                    }
+                ]))
             }
-
-            setBookAuthorItem(prevData => ([
-                ...prevData,
-                items
-            ]))
-            return items;
 
         }).catch(error => {
             addToast(error.message, {appearance: 'error', autoDismiss: true});
@@ -298,7 +316,7 @@ const AddBookForm = () => {
                                        onChange={BookChange}
                                        name="BookId"
                                 />
-                                <span className='err' id='BookId' style={{float: 'left', color : 'red'}}></span>
+                                <span style={{float: 'left', color : 'red'}}>{bookInfoErr.BookId}</span>
                             </div>
                         </div>
 
@@ -312,7 +330,7 @@ const AddBookForm = () => {
                                        onChange={BookChange}
                                        name="BookTitle"
                                 />
-                                <span className='err' id='BookTitle' style={{float: 'left', color : 'red'}}></span>
+                                <span style={{float: 'left', color : 'red'}}>{bookInfoErr.BookTitle}</span>
 
                             </div>
                         </div>
@@ -326,9 +344,13 @@ const AddBookForm = () => {
                                         onChange={BookChange}
                                         name="BookPublisherId"
                                 >
-                                    {bookPublisherItem}
+                                    {
+                                        bookPublisherItem.map((item) => {
+                                             return  <option value={item.key}>{item.val}</option>;
+                                        })
+                                    }
                                 </select>
-                                <span className='err' id='BookPublisherId' style={{float: 'left', color : 'red'}}></span>
+                                <span style={{float: 'left', color : 'red'}}>{bookInfoErr.BookPublisherId}</span>
 
                             </div>
                             <span className='col-sm-1 add' onClick={() => setShowBookPublisher(!showBookPublisher)}>
@@ -347,7 +369,7 @@ const AddBookForm = () => {
                                        onChange={BookChange}
                                        name="PublisherDate"
                                 />
-                                <span className='err' id='PublisherDate' style={{float: 'left', color : 'red'}}></span>
+                                <span style={{float: 'left', color : 'red'}}>{bookInfoErr.PublisherDate}</span>
 
                             </div>
                         </div>
@@ -361,9 +383,13 @@ const AddBookForm = () => {
                                         onChange={BookChange}
                                         name="BookAuthorId"
                                 >
-                                    {bookAuthorItem}
+                                    {
+                                        bookAuthorItem.map((item) => {
+                                            return  <option value={item.key}>{item.val}</option>;
+                                        })
+                                    }
                                 </select>
-                                <span className='err' id='BookAuthorId' style={{float: 'left', color : 'red'}}></span>
+                                <span style={{float: 'left', color : 'red'}}>{bookInfoErr.BookAuthorId}</span>
 
                             </div>
                             <span className='col-sm-1 add' onClick={() => setShowBookAuthor(!showBookAuthor)}>
@@ -406,7 +432,7 @@ const AddBookForm = () => {
                                        onChange={BookChange}
                                        name="AvailableUnit"
                                 />
-                                <span className='err' id='AvailableUnit' style={{float: 'left', color : 'red'}}></span>
+                                <span style={{float: 'left', color : 'red'}}>{bookInfoErr.AvailableUnit}</span>
 
                             </div>
                         </div>
@@ -420,7 +446,7 @@ const AddBookForm = () => {
                                        onChange={BookChange}
                                        name="UnitPrice"
                                 />
-                                <span className='err' id='UnitPrice' style={{float: 'left', color : 'red'}}></span>
+                                <span style={{float: 'left', color : 'red'}}>{bookInfoErr.UnitPrice}</span>
 
                             </div>
                         </div>

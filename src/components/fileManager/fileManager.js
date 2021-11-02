@@ -3,13 +3,11 @@ import axios from "axios";
 import {useToasts} from "react-toast-notifications";
 import {BallBeat} from "react-pure-loaders";
 import FileContainerCard from "./fileContainerCard";
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
+import AXIOS from "../../config/axiosWrapper";
+
 
 const FileManager = () => {
-    //const server = 'http://localhost:8080/';
-    const server = 'https://aqueous-gorge-52970.herokuapp.com/';
+
 
     const {addToast} = useToasts();
     const [files, setFiles] = useState(null);
@@ -24,12 +22,11 @@ const FileManager = () => {
         }
 
 
-        axios.post(server + `files/upload`, formData,{
+        axios.post(process.env.REACT_APP_SERVER_PATH + `files/upload`, formData,{
             headers: {
                 "Content-Type": "multipart/form-data",
             }
         }).then(res => {
-            console.log(res);
             setLoading(false);
 
             for (var i =0; i<(res['data']['result']).length; i++) {
@@ -53,7 +50,7 @@ const FileManager = () => {
     }, [])
 
     const loadFiles = () => {
-        axios.get(server + `files`).then(res => {
+        AXIOS.get(process.env.REACT_APP_SERVER_PATH + `files`, [] , {}).then(res => {
             setStoredFiles(res.data);
         }).catch(error => {
             addToast(error.message, {appearance: 'error', autoDismiss: true});

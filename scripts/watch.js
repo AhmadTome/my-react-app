@@ -26,3 +26,4 @@ function copyPublicFolder() {
         filter: file => file !== paths.appHtml
     });
 }
+

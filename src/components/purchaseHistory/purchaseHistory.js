@@ -2,11 +2,11 @@ import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {useToasts} from "react-toast-notifications";
 import ReactDatatable from "@ashvin27/react-datatable";
+import AXIOS from "../../config/axiosWrapper";
 
 
 const PurchaseHistory = () => {
-    //const server = 'http://localhost:8080/';
-    const server = 'https://aqueous-gorge-52970.herokuapp.com/';
+
 
     const {addToast} = useToasts();
     const [purchase, setPurchase] = useState(null);
@@ -75,7 +75,7 @@ const PurchaseHistory = () => {
     const loadPurchases = (page = 1) => {
         const search_attr = "inquiry=" + searchAttr.inquiry + "&purchase_date=" + searchAttr.purchase_date+ "&searchCategory=" + searchAttr.searchCategory+"&page="+page;
 
-        axios.get(server + `Purchase/search?` + search_attr).then(res => {
+        AXIOS.get(process.env.REACT_APP_SERVER_PATH + `Purchase/search?` + search_attr, [], {}).then(res => {
             updatePurchaseTable(res);
         }).catch(error => {
             addToast(error.message, {appearance: 'error', autoDismiss: true});

@@ -10,8 +10,21 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7f914664-7e70-44e7-a2b5-172ec0b14c3a" name="Default Changelist" comment="upload files icons">
+    <list default="true" id="7f914664-7e70-44e7-a2b5-172ec0b14c3a" name="Default Changelist" comment="fix server">
+      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/header/NavbarElements.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/config/axiosWrapper.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/watch.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/watch.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/addBook/addBook.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/addBook/addBook.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/fileManager/fileContainerCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/fileManager/fileContainerCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/fileManager/fileManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/fileManager/fileManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/header/header.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/header/header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/listOfBook/books.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/listOfBook/books.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/purchaseHistory/purchaseHistory.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/purchaseHistory/purchaseHistory.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +57,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/WebstormProjects/my-node-app" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -113,6 +126,12 @@
       <workItem from="1633414943681" duration="15941000" />
       <workItem from="1633506629315" duration="8733000" />
       <workItem from="1634123007464" duration="7248000" />
+      <workItem from="1634215919703" duration="642000" />
+      <workItem from="1634456507165" duration="3802000" />
+      <workItem from="1635147675195" duration="8446000" />
+      <workItem from="1635407032967" duration="11000" />
+      <workItem from="1635408751987" duration="944000" />
+      <workItem from="1635672577478" duration="3229000" />
     </task>
     <task id="LOCAL-00001" summary="upload all changes">
       <created>1634129641260</created>
@@ -128,7 +147,14 @@
       <option name="project" value="LOCAL" />
       <updated>1634130344310</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="fix server">
+      <created>1634215953112</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1634215953112</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -149,18 +175,19 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="upload all changes" />
     <MESSAGE value="upload files icons" />
-    <option name="LAST_COMMIT_MESSAGE" value="upload files icons" />
+    <MESSAGE value="fix server" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix server" />
   </component>
   <component name="WindowStateProjectService">
     <state x="-923" y="270" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1632210190478">
       <screen x="-1366" y="105" width="1366" height="728" />
     </state>
     <state x="-923" y="270" key="#com.intellij.fileTypes.FileTypeChooser/-1366.105.1366.728/0.0.1920.1040/1920.-301.1680.1010@-1366.105.1366.728" timestamp="1632210190478" />
-    <state x="856" y="261" key="FileChooserDialogImpl" timestamp="1634123031593">
+    <state x="856" y="261" key="FileChooserDialogImpl" timestamp="1635407041998">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="856" y="261" key="FileChooserDialogImpl/-1366.105.1366.728/0.0.1920.1040/1920.-301.1680.1010@-1366.105.1366.728" timestamp="1632125253450" />
-    <state x="856" y="261" key="FileChooserDialogImpl/-1366.105.1366.728/0.0.1920.1040/1920.-301.1680.1010@0.0.1920.1040" timestamp="1634123031593" />
+    <state x="856" y="261" key="FileChooserDialogImpl/-1366.105.1366.728/0.0.1920.1040/1920.-301.1680.1010@0.0.1920.1040" timestamp="1635407041998" />
     <state x="651" y="169" key="FileChooserDialogImpl/-1366.303.1366.728/0.0.1920.1040/1920.-301.1680.1010@0.0.1920.1040" timestamp="1630493239324" />
     <state x="463" y="118" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1630398917683" />
     <state width="1345" height="179" key="GridCell.Tab.0.bottom" timestamp="1629802442251">
@@ -179,13 +206,13 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state width="1345" height="179" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1629802442251" />
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1634130351873">
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1634215956228">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2/-1366.105.1366.728/0.0.1920.1040/1920.-301.1680.1010@0.0.1920.1040" timestamp="1634130351873" />
-    <state x="990" y="128" width="587" height="534" key="find.popup" timestamp="1634129614082">
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2/-1366.105.1366.728/0.0.1920.1040/1920.-301.1680.1010@0.0.1920.1040" timestamp="1634215956228" />
+    <state x="990" y="128" width="587" height="534" key="find.popup" timestamp="1635682507313">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="990" y="128" width="587" height="534" key="find.popup/-1366.105.1366.728/0.0.1920.1040/1920.-301.1680.1010@0.0.1920.1040" timestamp="1634129614082" />
+    <state x="990" y="128" width="587" height="534" key="find.popup/-1366.105.1366.728/0.0.1920.1040/1920.-301.1680.1010@0.0.1920.1040" timestamp="1635682507313" />
   </component>
 </project>
